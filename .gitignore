@@ -1,0 +1,10 @@
+CMakeLists.txt
+cmake-build-debug
+.idea
+.idea/
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/.name
+.idea/Refreshing-Project.iml
+.idea/workspace.xml
