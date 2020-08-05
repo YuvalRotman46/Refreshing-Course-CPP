@@ -1,11 +1,12 @@
 #include <iostream>
-#include "cats_inheritance/siami_cat.h"
+#include "cats_inheritance/siami_street_cat.h"
 
 int main() {
-    SiamiCat *c1 = new SiamiCat("Kitzi", "White", 3.33, "Mutzarela");
-    ((Cat*)c1)->show();
+    SiamiStreetCat *c = new SiamiStreetCat("Mitzi", "Brown", 12.37, 7
+                                           , "Pizza");
 
-    delete c1;
+    c->show();
 
+    delete c;
     return 0;
 }
