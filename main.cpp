@@ -1,9 +1,9 @@
 #include <iostream>
-#include "cats_inheritance/cat.h"
+#include "cats_inheritance/siami_cat.h"
 
 int main() {
-    Cat *c1 = new Cat(Cat("Kitzi", "White", 3.33));
-    c1->show();
+    SiamiCat *c1 = new SiamiCat("Kitzi", "White", 3.33, "Mutzarela");
+    ((Cat*)c1)->show();
 
     delete c1;
 
