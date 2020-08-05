@@ -14,6 +14,7 @@ StreetCat::StreetCat(const char* name, const char* color, double mus_length, int
 
 void StreetCat::show() const{
     cout << "########################### Street Cat ###########################" <<endl;
+    cout<<"Number of battles : " << battles <<endl;
     Cat::show();
     cout << "######################### Street Cat End #########################" <<endl;
 }
