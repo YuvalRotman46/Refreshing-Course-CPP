@@ -34,6 +34,8 @@ const Cat& Cat::operator=(const Cat &other){
     this->mus_length = other.mus_length;
     this->name = strdup(other.name);
     this->color = strdup(other.color);
+
+    return *this;
 }
 const Cat& Cat::operator=(Cat &&other){
     this->mus_length = other.mus_length;
@@ -42,6 +44,8 @@ const Cat& Cat::operator=(Cat &&other){
 
     other.color = nullptr;
     other.name = nullptr;
+
+    return *this;
 }
 void Cat::show() const{
     cout << "=================Cat==================" <<endl;

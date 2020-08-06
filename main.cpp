@@ -10,10 +10,11 @@ using std::cout, std::endl;
 int main() {
 
     SiamiStreetCat ssc("Mitzi", "Brown", 2.35, 4, "Pizza");
-    StreetCat *sc = new StreetCat((StreetCat&) ssc);
-    sc->show();
+    StreetCat sc("Mitzi", "Brown", 2.35, 4);
+    const StreetCat *c = &(sc=ssc);
+    c->show();
 
-    delete sc;
+
 
     return 0;
 }

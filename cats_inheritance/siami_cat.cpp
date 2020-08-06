@@ -28,7 +28,7 @@ const SiamiCat& SiamiCat::operator=(const SiamiCat& other){
     color = strdup(other.color);
     fav_food = strdup(fav_food);
     mus_length = other.mus_length;
-
+    return *this;
 }
 const SiamiCat& SiamiCat::operator=(SiamiCat&& other){
     name = other.name;
@@ -38,6 +38,7 @@ const SiamiCat& SiamiCat::operator=(SiamiCat&& other){
     fav_food = other.fav_food;
     other.fav_food = nullptr;
     mus_length = other.mus_length;
+    return *this;
 }
 void SiamiCat::show() const{
     cout << "$$$$$$$$$$$$$$$$$$$$$$$ Siami Cat $$$$$$$$$$$$$$$$$$$$$$$" <<endl;
