@@ -5,6 +5,14 @@
 #include "shape.h"
 #include <string.h>
 
+namespace Shapes{
+    const char* colors[] = {"Black", "White", "Yellow", "Blue", "Red", "Brown"};
+
+    const char* getColorName(Color c){
+        return colors[c];
+    }
+}
+
 Shape::Shape(int x, int y, const char* color): x(x), y(y){
     color = strdup(color);
 }

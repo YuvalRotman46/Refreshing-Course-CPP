@@ -10,11 +10,7 @@ using std::ostream;
 
 namespace Shapes{
     enum Color{BLACK, WHITE, YELLOW, BLUE, RED, BROWN};
-    static const char* colors[] = {"Black", "White", "Yellow", "Blue", "Red", "Brown"};
-
-    inline const char* getColorName(Color c){
-        return colors[c];
-    }
+    const char* getColorName(Color c);
 }
 
 
