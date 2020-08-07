@@ -1,20 +1,15 @@
 #include <iostream>
-#include "cats_inheritance/cat.h"
-#include "cats_inheritance/siami_street_cat.h"
-#include "cats_inheritance/street_cat.h"
-#include "cats_inheritance/siami_cat.h"
-
+#include "shapes/rect.h"
 
 using std::cout, std::endl;
 
 int main() {
 
-    SiamiStreetCat ssc("Mitzi", "Brown", 2.35, 4, "Pizza");
-    StreetCat sc("Mitzi", "Brown", 2.35, 4);
-    const StreetCat *c = &(sc=ssc);
-    c->show();
+    Rect *rect = new Rect(12,39, 100,13.5);
+    rect->fill(Shapes::getColorName(Shapes::BLUE));
+    rect->draw();
 
-
+    cout << *rect << endl;
 
     return 0;
 }
