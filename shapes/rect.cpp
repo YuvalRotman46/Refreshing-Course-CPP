@@ -50,7 +50,7 @@ double Rect::getArea() {
 
 ostream& operator<<(ostream& os, const Rect& rect){
     const char* doc = rect.getShapeDoc();
-    os << doc <<"\n";
+    os << doc;
     delete [] doc;
     return os;
 }

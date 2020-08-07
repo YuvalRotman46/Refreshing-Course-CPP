@@ -3,6 +3,7 @@
 
 using std::cout, std::endl;
 
+
 int main() {
 
     Rect *rect = new Rect(12,39, 100,13.5);
