@@ -5,27 +5,19 @@
 #include "rect.h"
 #include <string.h>
 #include <iostream>
+#include <sstream>
 
-using std::cout, std::endl, std::ostream;
+using std::cout, std::endl, std::ostream, std::ostringstream;
 
 Rect::Rect(int x, int y, double width, double high, const char *color) : Shape(x,y,color),
     width(width), high(high){}
 
 const char* Rect::getShapeDoc() const{
-    char shape_details[] = " Rect";
-    int buffer_size = strlen(this->getColor())+ strlen(shape_details)+1;
-    char buffer[buffer_size];
-    int i = 0;
-    for(;i<strlen(this->getColor());i++)
-        buffer[i] = this->getColor()[i];
+    ostringstream os;
+    os << "Rect:{" << "cords:("<<x<<", "<<y<<"), width: "<<width<<", high: "<<high
+    <<", color: "<< color<< "}";
 
-    for(int j=0;j<strlen(shape_details);j++){
-        buffer[i] = shape_details[j];
-        i++;
-    }
-    buffer[i] = 0;
-
-    return strdup(buffer);
+    return strdup(os.str().c_str());
 }
 
 void Rect::draw() const{
