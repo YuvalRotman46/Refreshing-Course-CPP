@@ -59,7 +59,7 @@ int Shape::getX() const {
 }
 
 void Shape::setX(int x) {
-    Shape::x = x;
+    this->x = x;
 }
 
 int Shape::getY() const {
@@ -67,7 +67,7 @@ int Shape::getY() const {
 }
 
 void Shape::setY(int y) {
-    Shape::y = y;
+    this->y = y;
 }
 
 const char *Shape::getColor() const {

@@ -2,6 +2,8 @@
 #include "shapes/rect.h"
 #include "shapes/circle.h"
 #include "shapes/point.h"
+#include "shapes/line.h"
+#include <math.h>
 
 using std::cout, std::endl;
 using namespace Shapes;
@@ -20,6 +22,17 @@ int main() {
 
     for(auto o:objects)
         cout << *o<<endl;
+
+    cout<<endl;
+
+    Line *line = new Line(1,1,3,3,Shapes::getColorName(Shapes::RED));
+    cout<<"Line length is : " << line->getLength()<<endl;
+    cout<< *line <<endl;
+    line->draw();
+
+    line->resize(sqrt(2));
+    cout<< *line <<endl;
+    line->draw();
 
     return 0;
 }
