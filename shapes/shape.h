@@ -45,6 +45,9 @@ public:
     const char *getColor() const;
     void setColor(const char *color);
 
+    friend ostream& operator<<(ostream& os, const Shape& shape);
+
+
 };
 
 #endif //REFRESHING_PROJECT_SHAPE_H

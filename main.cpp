@@ -13,9 +13,13 @@ int main() {
             new Circle(12,41, 12),
             new Point(0,0)
     };
-    for (auto o: objects) {
+    for (auto o: objects)
       o->draw();
-    }
+
+    cout<<endl;
+
+    for(auto o:objects)
+        cout << *o<<endl;
 
     return 0;
 }

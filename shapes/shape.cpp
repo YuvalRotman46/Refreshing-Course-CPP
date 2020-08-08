@@ -77,3 +77,10 @@ const char *Shape::getColor() const {
 void Shape::setColor(const char *color) {
     this->color = strdup(color);
 }
+
+ostream& operator<<(ostream& os, const Shape& shape){
+    const char* doc = shape.getShapeDoc();
+    os << doc;
+    delete [] doc;
+    return os;
+}
