@@ -14,7 +14,7 @@ namespace Shapes{
 }
 
 Shape::Shape(int x, int y, const char* color): x(x), y(y){
-    color = strdup(color);
+    this->color = strdup(color);
 }
 
 Shape::Shape(const Shape &other): x(other.x), y(other.y) {

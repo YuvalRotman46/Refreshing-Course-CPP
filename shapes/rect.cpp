@@ -30,7 +30,7 @@ void Rect::resize(float df){
 }
 
 void Rect::fill(const char* color){
-    cout<< "Rectangle was filled with "<<color<< " ."<<endl;
+    cout<< "Rectangle was filled with "<<color<< "."<<endl;
     delete [] this->color;
     this->color = strdup(color);
 }
