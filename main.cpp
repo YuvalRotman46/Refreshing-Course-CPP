@@ -8,26 +8,14 @@ using namespace Shapes;
 
 int main() {
 
-    Rect *rect = new Rect(12,39, 100,13.5, getColorName(BLUE));
-    rect->draw();
-    cout << *rect << endl;
-    delete rect;
-
-    cout<<endl;
-
-
-    Circle *c = new Circle(12,41, 12);
-    cout<< "The circle area is : "<< c->getArea()<<endl;
-    cout<< *c <<endl;
-    c->fill(getColorName(RED));
-    cout<< *c <<endl;
-    delete c;
-
-    cout<<endl;
-
-    Point *point = new Point(0,0);
-    point->draw();
-    cout<< *point <<endl;
+    Shape* objects[] = {
+            new Rect(12,39, 100,13.5, getColorName(BLUE)),
+            new Circle(12,41, 12),
+            new Point(0,0)
+    };
+    for (auto o: objects) {
+      o->draw();
+    }
 
     return 0;
 }
