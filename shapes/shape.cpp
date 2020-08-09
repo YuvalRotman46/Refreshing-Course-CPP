@@ -13,7 +13,7 @@ namespace Shapes{
     }
 }
 
-Shape::Shape(int x, int y, const char* color): x(x), y(y){
+Shape::Shape(double x, double y, const char* color): x(x), y(y){
     this->color = strdup(color);
 }
 
@@ -49,24 +49,24 @@ const Shape & Shape::operator=(Shape &&other) {
     return *this;
 }
 
-void Shape::move(int dx, int dy) {
+void Shape::move(double dx, double dy) {
     x += dx;
     y += dy;
 }
 
-int Shape::getX() const {
+double Shape::getX() const {
     return x;
 }
 
-void Shape::setX(int x) {
+void Shape::setX(double x) {
     this->x = x;
 }
 
-int Shape::getY() const {
+double Shape::getY() const {
     return y;
 }
 
-void Shape::setY(int y) {
+void Shape::setY(double y) {
     this->y = y;
 }
 

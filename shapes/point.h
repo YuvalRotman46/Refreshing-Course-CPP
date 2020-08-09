@@ -14,7 +14,7 @@ protected:
     virtual const char* getShapeDoc() const override;
 
 public:
-    Point(int x, int y, const char* color = Shapes::getColorName(Shapes::BLACK));
+    Point(double x, double y, const char* color = Shapes::getColorName(Shapes::BLACK));
     virtual void draw() const override;
     virtual void resize(float df) override;
     virtual void fill(const char* color) override;

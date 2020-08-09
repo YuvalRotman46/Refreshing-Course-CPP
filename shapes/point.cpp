@@ -15,7 +15,7 @@ const char* Point::getShapeDoc() const {
     return strdup(os.str().c_str());
 }
 
-Point::Point(int x, int y, const char *color): Shape(x, y, color) {}
+Point::Point(double x, double y, const char *color): Shape(x, y, color) {}
 
 void Point::draw() const{
     cout << "Haahhaaa I draw a "<< color << " point in {"<<

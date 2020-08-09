@@ -9,7 +9,7 @@
 
 using std::cout, std::endl, std::ostream, std::ostringstream;
 
-Rect::Rect(int x, int y, double width, double high, const char *color) : Shape(x,y,color),
+Rect::Rect(double x, double y, double width, double high, const char *color) : Shape(x,y,color),
     width(width), high(high){}
 
 const char* Rect::getShapeDoc() const{

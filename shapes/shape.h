@@ -16,14 +16,14 @@ namespace Shapes{
 
 class Shape{
 protected:
-    int x;
-    int y;
+    double x;
+    double y;
     char *color;
 
     virtual const char* getShapeDoc() const = 0;
 
 public:
-    Shape(int x, int y, const char* color = Shapes::getColorName(Shapes::BLACK));
+    Shape(double x, double y, const char* color = Shapes::getColorName(Shapes::BLACK));
     Shape(const Shape &other);
 
     Shape(Shape &&other);
@@ -32,16 +32,16 @@ public:
     const Shape& operator=(const Shape &other);
     const Shape& operator=(Shape &&other);
 
-    virtual void move(int dx, int dy);
+    virtual void move(double dx, double dy);
     virtual void draw() const = 0;
     virtual void resize(float df) = 0;
     virtual void fill(const char* color) = 0;
     virtual double getArea() = 0;
 
-    int getX() const;
-    void setX(int x);
-    int getY() const;
-    void setY(int y);
+    double getX() const;
+    void setX(double x);
+    double getY() const;
+    void setY(double y);
     const char *getColor() const;
     void setColor(const char *color);
 

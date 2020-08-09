@@ -17,7 +17,7 @@ protected:
     virtual const char *getShapeDoc() const override;
 
 public:
-    Rect(int x, int y, double width, double high, const char* color = Shapes::getColorName(Shapes::BLACK));
+    Rect(double x, double y, double width, double high, const char* color = Shapes::getColorName(Shapes::BLACK));
 
     virtual void draw() const override;
     virtual void resize(float df) override;

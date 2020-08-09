@@ -25,14 +25,19 @@ int main() {
 
     cout<<endl;
 
-    Line *line = new Line(1,1,3,3,Shapes::getColorName(Shapes::RED));
+    Line *line = new Line(0,0,0,3,Shapes::getColorName(Shapes::RED));
     cout<<"Line length is : " << line->getLength()<<endl;
     cout<< *line <<endl;
     line->draw();
-
-    line->resize(sqrt(2));
-    cout<< *line <<endl;
+    line->resize(2);
     line->draw();
+
+    delete line;
+
+    for(auto o:objects)
+        delete o;
+
+
 
     return 0;
 }
