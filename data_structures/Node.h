@@ -9,28 +9,42 @@
 
 using std::ostream;
 
-
+template<class T>
 class Node {
 private:
-    void* value;
+    T* value;
     Node* next;
 
 public:
-    Node(void* value, Node* next);
-    Node(void* value);
+    Node(T* value, Node* next){ this->value = value;
+        this->next = next;}
+
+    Node(T* value):Node(value, nullptr){}
+
     Node(const Node& other) = delete;
-    Node(Node &&other);
-    ~Node();
+    Node(Node &&other):Node(other.value, other.next){}
+    ~Node(){
+        // recursive destructor, deleting the whole node chain.
+        // not taking responsibility on value cleaning from heap.
+        delete next;
+    }
 
-    void* getValue() const;
+    T* getValue() const{return value;}
+    void setValue(T *value){
+        // not taking responsibility on former value cleaning from heap.
+        this->value;
+    }
+    Node* getNext() const{return next;}
+    void setNext(Node *next){ this->next = next;}
 
-    void setValue(void *value);
+    friend ostream& operator<<(ostream& os, const Node& node){
+        os<< "Node("<<*node.value<<")";
 
-    Node* getNext() const;
+        if(node.getNext() == nullptr) return os;
 
-    void setNext(Node *next);
-
-    friend ostream& operator<<(ostream& os, const Node& node);
+        os<<" ->";
+        operator<<(os, *node.getNext());
+    }
 };
 
 

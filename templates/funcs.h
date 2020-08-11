@@ -43,6 +43,12 @@ public:
         void printEllement(){
             print(*el);
         }
-        };
+
+    bool isObject(void* object_ref){
+        return object_ref == el;
+    }
+
+};
+
 
 #endif //REFRESHING_PROJECT_FUNCS_H
