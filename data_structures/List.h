@@ -205,6 +205,11 @@ bool List<T>::remove(void* object_pointer){
             if(chain->getNext()->getValue() == object_pointer){
                 element = chain->getNext();
                 chain->setNext(element->getNext());
+
+                //Cleaning up
+                element->setNext(nullptr);
+                delete element;
+                elements_num--;
                 return true;
             }
         }
@@ -216,19 +221,66 @@ bool List<T>::remove(void* object_pointer){
 }
 
 template<class T>
-T* List<T>::remove(int index);
+T* List<T>::remove(int index){
+
+    if(index == 0){
+        T *value = first->getValue();
+        delete first;
+        first = last = nullptr;
+        elements_num = 0;
+        return value;
+    }
+
+    Node<T> *chain = first, *element;
+    T *value;
+    for (int i = 0; i < index-1; i++)
+        chain = chain->getNext();
+
+    element = chain->getNext();
+    value = element->getValue();
+    chain->setNext(element->getNext());
+    element->setNext(nullptr);
+    delete elementl;
+    elements_num--;
+    return value;
+
+}
 
 template<class T>
-bool List<T>::removeAll(const List<T> &list);
+bool List<T>::removeAll(const List<T> &list){
+    Node<T> *chain = list.first;
+    while (chain != nullptr){
+        this->remove(chain->getValue());
+
+        chain = chain->getNext();
+    }
+    return true;
+}
 
 template<class T>
-bool List<T>::set(int index, T* e);
+bool List<T>::set(int index, T* e){
+    Node<T> *chain = first;
+    for (int i = 0; i < index; ++i)
+        chain = chain->getNext();
+    chain->setValue(e);
+
+    return true;
+}
 
 template<class T>
-int List<T>::size();
+int List<T>::size(){
+    return elements_num;
+}
 
 template<class T>
-T** List<T>::toArray();
+T** List<T>::toArray(){
+    T** allocated_array = new T*[elements_num];
+    Node<T> chain = first;
+    for(int i = 0; i < elements_num; i++){
+        allocated_array[i] = chain.getValue();
+    }
+    return allocated_array;
+}
 
 
 #endif //REFRESHING_PROJECT_LIST_H
