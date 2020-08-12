@@ -25,12 +25,12 @@ public:
     const List<T>& operator=(const List<T>& other) = delete;
     const List<T>& operator=(List<T> &&other);
     const List<T>& operator+=(T* e);
-    T* const operator[](int index);
+    T* const operator[](int index) throw (const char *);
     bool operator==(const List<T> &list);
 
 
     bool add(T* e);
-    void add(int index, T* e);
+    void add(int index, T* e) throw (const char *);
     bool addAll(const List<T> &list);
     bool addAll(int index, const List<T> &list);
     void clear();
@@ -101,7 +101,10 @@ const List<T>& List<T>::operator+=(T* e){
 }
 
 template<class T>
-T* const List<T>::operator[](int index){
+T* const List<T>::operator[](int index) throw (const char *){
+    if(index >= elements_num)
+        throw "Exception : Array Index Out Of Bounds Exception";
+
     Node<T> *element = first;
     for(int i = 0; i < index; i++)
         element = element->getNext();
@@ -116,9 +119,18 @@ bool List<T>::operator==(const List<T> &list){
 
 template<class T>
 bool List<T>::add(T* e){
+
+    if(first == nullptr){
+        first = new Node<T>(e);
+        last = first;
+        elements_num++;
+        return true;
+    }
+
     try {
         last->setNext(new Node<T>(e));
         last = last->getNext();
+        elements_num++;
         return true;
     } catch (...) {
         return false;
@@ -126,26 +138,69 @@ bool List<T>::add(T* e){
 }
 
 template<class T>
-void List<T>::add(int index, T* e){
-    Node<T> *chain = first, *broken;
-    for (int i = 0; i < index - 2; i++)
-        chain = chain->getNext();
+void List<T>::add(int index, T* e)throw (const char *){
+    Node<T> *new_first;
+    Node<T> *element;
 
-    broken = chain->getNext();
-    chain->setValue(new Node<T>(e, broken));
+    switch (index) {
+
+        case 0:
+            new_first = new Node<T>(e);
+            new_first->setNext(first);
+            first = new_first;
+            if(last == nullptr)
+                last = first;
+
+            elements_num++;
+            return;
+
+        case 1:
+            if(first == nullptr)
+                throw "Exception : Array Index Out Of Bounds Exception";
+
+            element = first->getNext();
+            first->setNext(new Node<T>(e, element));
+            if(first == last)
+                last = first->getNext();
+            elements_num++;
+            return;
+
+        default:
+            Node<T> *chain = first, *broken;
+            for (int i = 0; i < index - 2; i++)
+                chain = chain->getNext();
+
+            broken = chain->getNext();
+            chain->setNext(new Node<T>(e, broken));
+            if(broken == nullptr)
+                last = chain->getNext();
+
+            elements_num++;
+
+            break;
+
+    }
+
 }
 
 template<class T>
 bool List<T>::addAll(const List<T> &list){
 
-    last->setNext(list.first);
-    last = list.last;
+    try {
+        last->setNext(list.first);
+        last = list.last;
 
-    return true;
+        return true;
+    } catch (...) {
+        return false;
+    }
 }
 
 template<class T>
-bool List<T>::addAll(int index, const List<T> &list);
+bool List<T>::addAll(int index, const List<T> &list){
+    Node<T> *other_list_chain = list.first, *;
+
+}
 
 template<class T>
 void List<T>::clear(){
@@ -240,7 +295,7 @@ T* List<T>::remove(int index){
     value = element->getValue();
     chain->setNext(element->getNext());
     element->setNext(nullptr);
-    delete elementl;
+    delete element;
     elements_num--;
     return value;
 
