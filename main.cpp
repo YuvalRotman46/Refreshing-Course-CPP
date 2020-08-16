@@ -1,26 +1,22 @@
 #include <iostream>
+#include "shapes/shapes.h"
 #include "data_structures/List.h"
 
 using namespace std;
 
 int main(){
-    int arr[] = {12, 42, 79, 16, 4, 193, 51};
-    List<int> *list = new List<int>();
+    List<Shape> *list = new List<Shape>();
 
-    for(int i = 0; i< sizeof(arr)/sizeof(int); i++){
-        list->add(&arr[i]);
-    }
-
-    int* new_value = new int;
-    *new_value = 2212;
-    list->add(1, new_value);
+    list->add(new Circle(0,0,1));
+    list->add(new Rect(100, -100, 50, 50, Shapes::getColorName(Shapes::YELLOW)));
+    list->add(new Line(5,5, 120, 145, Shapes::getColorName(Shapes::RED)));
 
     for (int i = 0; i < list->size(); ++i) {
-        cout << *(*list)[i] <<endl;
+        if(typeid(*(*list)[i]) == typeid(Line))
+            cout << "this ls a line with length : " << ((Line*)(*list)[i])->getLength() << endl;
     }
-
-    cout << *list << endl;
 
     delete list;
 
+    return 0;
 }
