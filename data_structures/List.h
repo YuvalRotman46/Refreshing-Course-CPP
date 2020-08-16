@@ -25,8 +25,8 @@ public:
     const List<T>& operator=(const List<T>& other) = delete;
     const List<T>& operator=(List<T> &&other);
     const List<T>& operator+=(T* e);
-    T* const operator[](int index) throw (const char *);
-    bool operator==(const List<T> &list);
+    T* const operator[](int index) const throw (const char *);
+    bool operator==(const List<T> &list) const;
 
 
     bool add(T* e);
@@ -34,16 +34,16 @@ public:
     bool addAll(const List<T> &list);
     bool addAll(int index, const List<T> &list)  throw (const char *);
     void clear();
-    bool contains(void* object_pointer);
-    bool containsAll(const List<T> &list);
-    int indexOf(void* object_pointer);
-    bool isEmpty();
+    bool contains(void* object_pointer) const;
+    bool containsAll(const List<T> &list) const;
+    int indexOf(void* object_pointer) const;
+    bool isEmpty() const;
     bool remove(void* object_pointer);
     T* remove(int index) throw (const char *);
     bool removeAll(const List<T> &list);
-    bool set(int index, T* e);
-    int size();
-    T** toArray();
+    bool set(int index, T* e) throw (const char *);
+    int size() const;
+    T** toArray() const;
 
 
     friend ostream& operator<<(ostream& os, const List<T>& list){
@@ -101,7 +101,7 @@ const List<T>& List<T>::operator+=(T* e){
 }
 
 template<class T>
-T* const List<T>::operator[](int index) throw (const char *){
+T* const List<T>::operator[](int index) const throw (const char *) {
     if(index >= elements_num)
         throw "Exception : Array Index Out Of Bounds Exception";
 
@@ -113,7 +113,7 @@ T* const List<T>::operator[](int index) throw (const char *){
 }
 
 template<class T>
-bool List<T>::operator==(const List<T> &list){
+bool List<T>::operator==(const List<T> &list) const{
     return elements_num == list.elements_num && first == list.first && last == list.last;
 }
 
@@ -253,7 +253,7 @@ void List<T>::clear(){
 }
 
 template<class T>
-bool List<T>::contains(void* object_pointer){
+bool List<T>::contains(void* object_pointer) const{
     Node<T> *chain = first;
     while(chain != nullptr){
         if(chain->getValue() == object_pointer)
@@ -265,7 +265,7 @@ bool List<T>::contains(void* object_pointer){
 }
 
 template<class T>
-bool List<T>::containsAll(const List<T> &list){
+bool List<T>::containsAll(const List<T> &list) const{
     if(list.elements_num == 0) return true;
 
     if(elements_num == 0) return false;
@@ -288,7 +288,7 @@ bool List<T>::containsAll(const List<T> &list){
 }
 
 template<class T>
-int List<T>::indexOf(void* object_pointer){
+int List<T>::indexOf(void* object_pointer) const{
     Node<T> *chain = first;
     int index = 0;
     while(chain != nullptr){
@@ -302,8 +302,8 @@ int List<T>::indexOf(void* object_pointer){
 }
 
 template<class T>
-bool List<T>::isEmpty(){
-    return first == nullptr && last == nullptr;
+bool List<T>::isEmpty() const{
+    return first == nullptr && last == nullptr && elements_num == 0;
 }
 
 template<class T>
@@ -338,6 +338,7 @@ bool List<T>::remove(void* object_pointer){
             /* cleaning up detected target */
             possible_target->setNext(nullptr);
             delete possible_target;
+            --elements_num;
             return true;
         }
 
@@ -364,6 +365,11 @@ T* List<T>::remove(int index) throw (const char *){
         first->setNext(nullptr);
         delete first;
         first = element;
+        --elements_num;
+
+        /* In case we only have one element */
+        if(first == nullptr) first = last = nullptr;
+
         return value;
     }
 
@@ -377,7 +383,11 @@ T* List<T>::remove(int index) throw (const char *){
     chain->setNext(element->getNext());
     element->setNext(nullptr);
     delete element;
-    elements_num--;
+    --elements_num;
+
+    /* In case we are removing the last element */
+    if(chain->getNext() == nullptr) last = chain;
+
     return value;
 
 }
@@ -394,7 +404,11 @@ bool List<T>::removeAll(const List<T> &list){
 }
 
 template<class T>
-bool List<T>::set(int index, T* e){
+bool List<T>::set(int index, T* e) throw (const char *){
+
+    if(index >= elements_num)
+        throw "Exception : Array Index Out Of Bounds Exception";
+
     Node<T> *chain = first;
     for (int i = 0; i < index; ++i)
         chain = chain->getNext();
@@ -404,12 +418,12 @@ bool List<T>::set(int index, T* e){
 }
 
 template<class T>
-int List<T>::size(){
+int List<T>::size() const{
     return elements_num;
 }
 
 template<class T>
-T** List<T>::toArray(){
+T** List<T>::toArray() const{
     T** allocated_array = new T*[elements_num];
     Node<T> chain = first;
     for(int i = 0; i < elements_num; i++){

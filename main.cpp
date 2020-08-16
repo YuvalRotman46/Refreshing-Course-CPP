@@ -1,17 +1,18 @@
 #include <iostream>
-#include "data_structures/Node.h"
+#include "data_structures/List.h"
 
 using namespace std;
 
 int main(){
+    int arr[] = {12, 42, 79, 16, 4, 193, 51};
+    List<int> *list = new List<int>();
 
-    double x = 23.4;
-    double y = 72.123;
-    double z = 912.7;
+    for(int i = 0; i< sizeof(arr)/sizeof(int); i++){
+        list->add(&arr[i]);
+    }
 
-    Node<double> *root = new Node<double>(&x, new Node<double>(&y, new Node<double>(&z)));
-    cout<<*root<<endl;
+    cout << *list << endl;
 
-    delete root;
+    delete list;
 
 }
