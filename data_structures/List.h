@@ -48,7 +48,7 @@ public:
 
     friend ostream& operator<<(ostream& os, const List<T>& list){
         Node<T> *chain = list.first;
-        os<<"List[ ";
+        os<<"List[";
         while(chain != nullptr){
             os<< *chain->getValue();
             if(chain != list.last)
@@ -56,7 +56,7 @@ public:
 
             chain = chain->getNext();
         }
-        os<<" ]";
+        os<<"]";
         return os;
     }
 

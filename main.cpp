@@ -11,6 +11,14 @@ int main(){
         list->add(&arr[i]);
     }
 
+    int* new_value = new int;
+    *new_value = 2212;
+    list->add(1, new_value);
+
+    for (int i = 0; i < list->size(); ++i) {
+        cout << *(*list)[i] <<endl;
+    }
+
     cout << *list << endl;
 
     delete list;
