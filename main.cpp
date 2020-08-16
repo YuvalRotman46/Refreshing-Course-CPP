@@ -16,6 +16,16 @@ int main(){
             cout << "this ls a line with length : " << ((Line*)(*list)[i])->getLength() << endl;
     }
 
+    Shape *removed_shape = (list->remove(2));
+
+    cout << *removed_shape <<endl;
+    delete removed_shape;
+
+    cout << list->size() <<endl;
+
+
+
+    list->deleteValuesAllocations();
     delete list;
 
     return 0;
