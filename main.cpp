@@ -13,5 +13,5 @@ int main(){
     cout<<*root<<endl;
 
     delete root;
-    return 0;
+
 }

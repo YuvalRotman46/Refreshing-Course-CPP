@@ -32,14 +32,14 @@ public:
     bool add(T* e);
     void add(int index, T* e) throw (const char *);
     bool addAll(const List<T> &list);
-    bool addAll(int index, const List<T> &list);
+    bool addAll(int index, const List<T> &list)  throw (const char *);
     void clear();
     bool contains(void* object_pointer);
     bool containsAll(const List<T> &list);
     int indexOf(void* object_pointer);
     bool isEmpty();
     bool remove(void* object_pointer);
-    T* remove(int index);
+    T* remove(int index) throw (const char *);
     bool removeAll(const List<T> &list);
     bool set(int index, T* e);
     int size();
@@ -186,10 +186,17 @@ void List<T>::add(int index, T* e)throw (const char *){
 template<class T>
 bool List<T>::addAll(const List<T> &list){
 
+    if(first == nullptr){
+        first = list.first;
+        last =  list.last;
+        elements_num = list.elements_num;
+        return true;
+    }
+
     try {
         last->setNext(list.first);
         last = list.last;
-
+        elements_num += list.elements_num;
         return true;
     } catch (...) {
         return false;
@@ -197,9 +204,44 @@ bool List<T>::addAll(const List<T> &list){
 }
 
 template<class T>
-bool List<T>::addAll(int index, const List<T> &list){
-    Node<T> *other_list_chain = list.first, *;
+bool List<T>::addAll(int index, const List<T> &list) throw (const char *){
+    if(list.elements_num == 0) return true;
 
+    if(index >= elements_num)
+        throw "Exception : Array Index Out Of Bounds Exception";
+
+    Node<T> *broke_node;
+    try {
+        if (index == 0) {
+            broke_node = first;
+            first = list.first;
+            list.last->setNext(broke_node);
+            elements_num += list.elements_num;
+            return true;
+        }
+
+        Node<T> *this_list_pointer = first;
+        for (int i = 0; i < index - 1; ++i)
+            this_list_pointer = this_list_pointer->getNext();
+
+        /*
+         * Saving the current desire index element for connect it to the rest of the chain later
+         */
+        broke_node = this_list_pointer->getNext();
+
+        /*
+         * Connecting the other list in the desire index
+         */
+        this_list_pointer->setNext(list.first);
+        list.last->setNext(broke_node);
+        elements_num += list.elements_num;
+
+        if (index == elements_num - 1) last = list.last;
+        return true;
+    }
+    catch(...){
+        return false;
+    }
 }
 
 template<class T>
@@ -207,6 +249,7 @@ void List<T>::clear(){
     delete first;
     first = nullptr;
     last = nullptr;
+    elements_num = 0;
 }
 
 template<class T>
@@ -222,7 +265,27 @@ bool List<T>::contains(void* object_pointer){
 }
 
 template<class T>
-bool List<T>::containsAll(const List<T> &list);
+bool List<T>::containsAll(const List<T> &list){
+    if(list.elements_num == 0) return true;
+
+    if(elements_num == 0) return false;
+
+    Node<T> *this_list_pointer = first, *other_list_pointer = list.first;
+    while (this_list_pointer != nullptr){
+        bool one_equality = false;
+        while (other_list_pointer != nullptr){
+            if(other_list_pointer->getValue() == this_list_pointer->getValue())
+                one_equality = true;
+
+            other_list_pointer = other_list_pointer->getNext();
+        }
+        if(one_equality == false) return false;
+
+        other_list_pointer = list.first;
+        this_list_pointer = this_list_pointer->getNext();
+    }
+    return true;
+}
 
 template<class T>
 int List<T>::indexOf(void* object_pointer){
@@ -245,44 +308,62 @@ bool List<T>::isEmpty(){
 
 template<class T>
 bool List<T>::remove(void* object_pointer){
+    if(first == nullptr) return false;
 
-    if(first == object_pointer){
+    Node<T> *broke_element; /* A pointer for the element after the one we want to remove for connecting the chain. */
+
+    /* Case of removing the first element */
+    if(first->getValue() == object_pointer){
+        broke_element = first->getNext();
+        first->setNext(nullptr);
         delete first;
-        first = nullptr;
-        last = nullptr;
+        first = broke_element;
+
+        /* if element has been detected as the only one */
+        if(first == nullptr) last = nullptr;
+
+        --elements_num;
+        return true;
     }
 
-    Node<T> *chain = first;
-    Node<T> *element;
-
+    Node<T> chain = first;
     while(chain != nullptr){
-        if(chain->getNext() != nullptr){
-            if(chain->getNext()->getValue() == object_pointer){
-                element = chain->getNext();
-                chain->setNext(element->getNext());
+        if(chain.getNext() == nullptr) return false;
 
-                //Cleaning up
-                element->setNext(nullptr);
-                delete element;
-                elements_num--;
-                return true;
-            }
+        Node<T> *possible_target;
+        possible_target = chain.getNext();
+        if(possible_target->getValue() == object_pointer){
+            chain.setNext(possible_target->getNext());
+
+            /* cleaning up detected target */
+            possible_target->setNext(nullptr);
+            delete possible_target;
+            return true;
         }
 
-        chain = chain->getNext();
+        chain = chain.getNext();
     }
 
     return false;
 }
 
 template<class T>
-T* List<T>::remove(int index){
+T* List<T>::remove(int index) throw (const char *){
+
+    if(index >= elements_num)
+        throw "Exception : Array Index Out Of Bounds Exception";
 
     if(index == 0){
+        Node<T> *element;
         T *value = first->getValue();
+
+        /*
+         * Erasing the first node without destroying the whole node chain.
+         */
+        element = first->getNext();
+        first->setNext(nullptr);
         delete first;
-        first = last = nullptr;
-        elements_num = 0;
+        first = element;
         return value;
     }
 
